@@ -1,21 +1,33 @@
-import React,  { Component } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { updateProp } from '../../ducks/reducer';
+import { connect } from 'react-redux';
 
 class WizardThree extends Component {
-    render(){
-        return(
+    render() {
+        return (
             <div className="parent-div">
                 <div className="vert-align">
-                   <p> What property are you looking to use the loan on? </p><br />
+                    <p> What property are you looking to use the loan on? </p><br />
                     <div className="row">
-                        <Link to="/wFour"><button value="primaryHome" onClick={this.props.propToBeUsedOn}>Primary Home</button></Link>
-                        <Link to="/wFour"><button value="rentalProperty" onClick={this.props.propToBeUsedOn}>Rental Property</button></Link>
-                        <Link to="/wFour"><button value="secondaryHome" onClick={this.props.propToBeUsedOn}>Secondary Home</button></Link>
+                        <Link to="/wFour"><button value="primaryHome" onClick={e => updateProp(e.target.value)}>Primary Home</button></Link>
+                        <Link to="/wFour"><button value="rentalProperty" onClick={e => updateProp(e.target.value)}>Rental Property</button></Link>
+                        <Link to="/wFour"><button value="secondaryHome" onClick={e => updateProp(e.target.value)}>Secondary Home</button></Link>
                     </div>
-                </div>           
+                </div>
             </div>
         )
     }
 }
 
-export default WizardThree; 
+function mapStateToProps(state) {
+    return {
+        propToBeUsedOn: state.propToBeUsedOn
+    }
+}
+
+let actions = {
+    updateProp
+}
+
+export default connect(mapStateToProps, actions)(WizardThree); 
